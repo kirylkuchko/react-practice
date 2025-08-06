@@ -4,16 +4,16 @@ import './employees-add-form.css';
 export default class EmployeesAddForm extends Component {
     constructor(props) {
         super(props);
-        //TODO: make correct const in js class
-        const defaultStateValue = {
-            name: '',
-            salary: ''
-        }
-
         this.state = {
-            ...defaultStateValue
+            ...EmployeesAddForm.DEFAULT_STATE_VALUE
         }
     }
+
+    static DEFAULT_STATE_VALUE = {
+        name: '',
+        salary: ''
+    }
+
 
     onChangeValue = (e) => {
         this.setState({
@@ -23,11 +23,15 @@ export default class EmployeesAddForm extends Component {
 
     resetForm = () => {
         this.setState({
-            ...this.defaultStateValue
+            ...EmployeesAddForm.DEFAULT_STATE_VALUE
         });
     }
 
     onAddClick = (e) => {
+        if (!this.state.name.trim()) {
+            return;
+        }
+
         this.props.onAddEmployee(this.state.name, this.state.salary);
         this.resetForm();
         e.preventDefault();
